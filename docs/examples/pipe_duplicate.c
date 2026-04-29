@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe_simple.c                                      :+:      :+:    :+:   */
+/*   pipe_duplicate.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sergio-alejandro <sergio-alejandro@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/29 07:26:43 by sergio-alej       #+#    #+#             */
-/*   Updated: 2026/04/29 07:58:32 by sergio-alej      ###   ########.fr       */
+/*   Created: 2026/04/29 08:01:32 by sergio-alej       #+#    #+#             */
+/*   Updated: 2026/04/29 08:19:51 by sergio-alej      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,19 @@
 
 int	main(void)
 {
-	int		pipe_fd[2];
-	char	buffer[50];
+	int		x;
+	pid_t	pid;
 
-	pipe(pipe_fd);
-	write(pipe_fd[1], "Hola pipe\n", 10);
-	read(pipe_fd[0], buffer, 50);
-	printf("Leido: %s", buffer);
+	x = 10;
+	pid = fork();
+	if (pid == 0)
+	{
+		x = 20;
+		printf("Hijo x= %d\n", x);
+	}
+	else
+	{
+		printf("Padre: x = %d\n", x);
+	}
 	return (0);
 }

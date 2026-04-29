@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe_simple.c                                      :+:      :+:    :+:   */
+/*   pipe_fork.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sergio-alejandro <sergio-alejandro@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/29 07:26:43 by sergio-alej       #+#    #+#             */
-/*   Updated: 2026/04/29 07:58:32 by sergio-alej      ###   ########.fr       */
+/*   Created: 2026/04/29 07:54:43 by sergio-alej       #+#    #+#             */
+/*   Updated: 2026/04/29 07:58:05 by sergio-alej      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,16 @@
 
 int	main(void)
 {
-	int		pipe_fd[2];
-	char	buffer[50];
+	pid_t pid = fork();
 
-	pipe(pipe_fd);
-	write(pipe_fd[1], "Hola pipe\n", 10);
-	read(pipe_fd[0], buffer, 50);
-	printf("Leido: %s", buffer);
+	if (pid == 0)
+	{
+		printf("Soy el hijo. pid == %d\n", getpid());
+	}
+	else
+	{
+		printf("Soy el padre.\nMi hijo tiene pid = %d\n", pid);
+	}
+
 	return (0);
 }

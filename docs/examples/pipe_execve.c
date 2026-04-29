@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe_simple.c                                      :+:      :+:    :+:   */
+/*   pipe_execve.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sergio-alejandro <sergio-alejandro@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/29 07:26:43 by sergio-alej       #+#    #+#             */
-/*   Updated: 2026/04/29 07:58:32 by sergio-alej      ###   ########.fr       */
+/*   Created: 2026/04/29 08:36:56 by sergio-alej       #+#    #+#             */
+/*   Updated: 2026/04/29 08:38:44 by sergio-alej      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,10 @@
 
 int	main(void)
 {
-	int		pipe_fd[2];
-	char	buffer[50];
+	char	*argv[] = {"ls", "-l", NULL};
+	char	*envp[] = {NULL};
 
-	pipe(pipe_fd);
-	write(pipe_fd[1], "Hola pipe\n", 10);
-	read(pipe_fd[0], buffer, 50);
-	printf("Leido: %s", buffer);
-	return (0);
+	execve("/bin/ls", argv, envp);
+	perror("exceve");
+	return (1);
 }

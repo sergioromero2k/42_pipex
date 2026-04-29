@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe_simple.c                                      :+:      :+:    :+:   */
+/*   pipe_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sergio-alejandro <sergio-alejandro@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/29 07:26:43 by sergio-alej       #+#    #+#             */
-/*   Updated: 2026/04/29 07:58:32 by sergio-alej      ###   ########.fr       */
+/*   Created: 2026/04/29 08:41:00 by sergio-alej       #+#    #+#             */
+/*   Updated: 2026/04/29 08:44:08 by sergio-alej      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <unistd.h>
 
-int	main(void)
-{
-	int		pipe_fd[2];
-	char	buffer[50];
+int main() {
+    char *cmd = "ls";
+    char *path = getenv("PATH");
 
-	pipe(pipe_fd);
-	write(pipe_fd[1], "Hola pipe\n", 10);
-	read(pipe_fd[0], buffer, 50);
-	printf("Leido: %s", buffer);
-	return (0);
+    char *p = strtok(path, ":");
+    while (p != NULL) {
+        char fullpath[256];
+        snprintf(fullpath, sizeof(fullpath), "%s/%s", p, cmd);
+    }
 }

@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe_simple.c                                      :+:      :+:    :+:   */
+/*   pipe_fork_exec.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sergio-alejandro <sergio-alejandro@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/29 07:26:43 by sergio-alej       #+#    #+#             */
-/*   Updated: 2026/04/29 07:58:32 by sergio-alej      ###   ########.fr       */
+/*   Created: 2026/04/29 08:41:00 by sergio-alej       #+#    #+#             */
+/*   Updated: 2026/04/29 08:50:04 by sergio-alej      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 int	main(void)
 {
-	int		pipe_fd[2];
-	char	buffer[50];
+	pid_t	pid;
+	char *argv[] = {"ls", "-l", NULL};
 
-	pipe(pipe_fd);
-	write(pipe_fd[1], "Hola pipe\n", 10);
-	read(pipe_fd[0], buffer, 50);
-	printf("Leido: %s", buffer);
-	return (0);
+	pid = fork();
+	if (pid == 0)
+	{
+		// HIJO: reemplaza su código por "ls"
+		execve("/bin/ls", argv, NULL);
+		perror("execve");
+	}
+	else
+	{
+		// PADRE: espera al hijo
+		wait(NULL);
+		printf("Comando terminado\n");
+	}
 }
